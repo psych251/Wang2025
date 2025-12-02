@@ -1,0 +1,173 @@
+---
+title: "Replication of _When Seating Matters: Modeling Graded Social Attitudes as Bayesian Inference_"
+subtitle: "by Wang & Jara-Ettinger (2025, Proceedings of the Annual Meeting of the Cognitive Science Society)"
+author: "Karla Esmeralda Perez (perezke [at] stanford [dot] edu)"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+format:
+  html:
+    toc: true
+    toc_depth: 3
+---
+
+<!-- Replication reports should all use this template to standardize reporting across projects.  These reports will be public supplementary materials that accompany the summary report(s) of the aggregate results. -->
+
+## Introduction
+
+### Justification
+
+I want to replicate this study because I am interested in how humans make sophisticated social relationship inferences--for instance, how one person feels about another based off of perceptual cues (i.e., seating arrangements)--from very little data. This project is ideal because it elucidates how high-level cognition (e.g., theory of mind, naive utility calculus) mediates low-level perceptual cues that give rise to social inferences. Previously, I worked on a related project that sought to determine whether children can use gaze direction and duration to infer the nature of a relationship between dyads, and I hope to continue developing my knowledge about this line of work. Finally, the authors compared the human data they collected to three computational models; one of my goals this year is to learn more about computational modeling, so this project is an ideal first step.
+
+### Stimuli & Procedures
+
+The stimuli for this project consisted of 30 still images depicting two characters (Yellow and Purple); each still represented a unique seating configuration between these two characters. Participants were presented with a cover story and had to pass a comprehension test to move on to the test phase. Then, participants saw all 30 stills in randomized order; for each still participants had to answer, "How does Purple feel about Yellow?" using a slider where one end represents "_strongly dislikes_" and the other end represents "_strongly likes_."
+
+### Expected Challenges
+
+The biggest challenge will be interpreting the code and outputs for the models. I have never done modeling work first-hand, so I may grow confused and frustrated. The second biggest challenge may be hosting my study; I don't think that I will have to code a custom interface because the stimuli are just static images and participants will use scales to provide their responses (which are very common), but if I do have to code a custom interface, a challenge will be to ensure that I adequately collect all the right data needed for my analysis and correctly set the pipeline to download and store the data, e.g., make sure that refreshing the page does not overwrite the participant's data-frame. In any case, I have experience coding an interface from scratch (but am not super confident about it), so I know I can do it if it comes down to it. 
+
+#### Links
+
+[My Qualtrics study](https://stanforduniversity.qualtrics.com/jfe/form/SV_eJx80MzDzOBR1Zk)
+
+[My Project Repository](https://github.com/karlaeperez/Wang2025)
+
+[Wang & Jara-Ettinger, 2025](https://escholarship.org/uc/item/10d930rk#main)
+
+
+## Methods
+
+### Power Analysis
+
+Original effect size, power analysis for samples to achieve 80%, 90%, 95% power to detect that effect size.  Considerations of feasibility for selecting planned sample size.
+
+### Planned Sample
+
+Planned sample size and/or termination rule, sampling frame, known demographics if any, preselection rules if any.
+
+50 U.S. participants
+
+### Materials
+
+I precisely re-created the stimuli that the authors used in their original study.
+
+"The stimuli consisted of 30 static images of an illustration of a meeting room with a desk, a set of chairs around the table, an entrance, and two agents, a yellow one and a purple one (see Fig. 2 for examples). Yellow was always seated in one of the chairs. Purple appeared seated in one of the chairs, along with a trajectory that indicated how they reached that seat from the entrance. Each image depicted a scenario where Purple entered a meeting room and decided where to sit while Yellow was already seated. To create a rich space of trials, we used a combinatorial design. We started by selecting three initial regions where Yellow could be sitting: (1) near the entrance, (2) far from the entrance, and (3) in the middle of the room. We then selected five different seating choices for Purple to sit in: (1) closest to the entrance, (2) closest to Yellow, (3) farthest from Yellow, and (4-5) two possible intermediate distances from Yellow. For each of the three initial regions where Yellow could be seated, we selected two possible seats in this region (e.g., one along the vertical row and one along the horizontal row). This results in a total of 30 (3x5x2) possible theoretical configurations. Additionally, the stimuli were designed to ensure that there are clusters of trials (two sets with 4 trials, and two with 6 trials) that controlled for the distance between the two agents so that we could better evaluate alternative heuristics."
+
+### Procedure
+
+I attempted to precisely re-create the procedure that the authors implemented in their original study.
+
+"Participants were first familiarized with the seating scenario setup through a cover story. Participants were told that they would see events where a protagonist, Purple, arrived in a meeting room. Another agent, Yellow, had already arrived and seated. Participants were then told that Purple’s seating choice would affect the probability that Yellow would initiate a conversation before the meeting started. Thus, Purple would choose a seat based both on how far they had to walk and on how they felt toward Yellow. After reading the cover story, participants were asked six simple comprehension check questions to ensure they understood the logic of the task (the cover story and 30 stimuli trials are available on the OSF page). Participants had to correctly answer each comprehension question, and pass a reCAPTCHA test to proceed to the test trials. Participants who failed one of the comprehension checks were asked to review the cover story and were given unlimited attempts to answer the comprehension check question. They could only proceed to the next question if they correctly answered the previous one, or they could choose to exit this study. In the test phase, participants were presented with all 30 trials in a randomized order. In each trial, participants viewed a static image of the meeting room with Yellow’s seat and Purple’s choice. Participants were asked to answer ”How does Purple feel about Yellow?” using a slider, with one end representing Strongly Dislikes (coded as −7) and the other end representing Strongly Likes (coded as 7). At the end of the 30 trials, participants were asked to explain what strategy they used in the task, and they were asked “How intuitive do you find the following statement”: (1) “The farther away you sit from someone, the less likely they are to talk to you.” (2) “Imagine you are in the same meeting room setting as shown in the study. If you are speaking with someone, the farther away they are sitting, the harder it is to maintain a conversation." Participants rated the strength of their intuitions using a Likert scale from 1 to 7."
+
+Currently, for Pilot A the reCAPTCHA function is not an option for me on Qualtrics.
+
+### Analysis Plan
+
+Participant judgments were z-scored within participants and averaged across trial type.
+Then, participant z scores were compared to model predictions. Model predictions were also z scored. The participant and model z scores were compared by computing the Pearson correlation coefficient and a 95% CI for each comparison.
+
+<!-- Can also quote directly, though it is less often spelled out effectively for an analysis strategy section.  The key is to report an analysis strategy that is as close to the original - data cleaning rules, data exclusion rules, covariates, etc. - as possible.   -->
+
+<!-- **Clarify key analysis of interest here**  You can also pre-specify additional analyses you plan to do. -->
+
+### Differences from Original Study
+
+No expected differences other than size of the sample. The original study recruited 50 people on prolific, but I may need to recruit less depending on the funding I recieve.
+<!-- Explicitly describe known differences in sample, setting, procedure, and analysis plan from original study.  The goal, of course, is to minimize those differences, but differences will inevitably occur.  Also, note whether such differences are anticipated to make a difference based on claims in the original article or subsequent published research on the conditions for obtaining the effect. -->
+
+### Methods Addendum (Post Data Collection)
+
+You can comment this section out prior to final report with data collection.
+
+#### Actual Sample
+Sample size, demographics, data exclusions based on rules spelled out in analysis plan
+
+#### Differences from pre-data collection methods plan
+  Any differences from what was described as the original plan, or “none”.
+
+
+## Results
+
+
+### Data preparation
+
+Data preparation following the analysis plan.
+	
+```{r include=F}
+### Data Preparation
+
+#### Load Relevant Libraries and Functions
+library(tidyverse)
+library(readr)
+
+#### Import data
+raw_data <- read_csv("data.csv")
+model_predictions <- read_csv("model predictions.csv")
+
+#### Data exclusion / filtering
+data <- raw_data %>% 
+  filter(Finished == "TRUE") %>% 
+  select(ResponseId, 21:50) %>% #### Prepare data for analysis - create columns etc.
+  pivot_longer(!ResponseId, names_to = "question", values_to = "response") %>% 
+  mutate(question = as.factor(question), response = as.numeric(response))
+
+
+```
+
+### Confirmatory analysis
+
+The analyses as specified in the analysis plan.
+
+```{r}
+# compute within participant z scores (z_score) and average z score across trials (avg_z_score)
+data_analyzed <- data %>% 
+  group_by(ResponseId) %>% 
+  mutate(subj_avg = mean(response), subj_sd = sd(response)) %>% 
+  ungroup() %>% 
+  mutate(z_score = ((response - subj_avg) / subj_sd)) %>% 
+  group_by(question) %>% 
+  mutate(avg_z_score = mean(z_score)) %>% 
+  ungroup()
+
+
+```
+
+
+*Side-by-side graph with original graph is ideal here*
+
+Graph of model predictions for some random trial. I cannot join the model z scores with my participant z scores because the authors did not provide a way to decode which column name represented which trial. I've emailed the lead researcher and am hoping to get a response soon. Once I can join the participant scores with model scores, I will display the average participant z score bar on the same graph as the model z scores for each trial (one graph per trial).
+
+```{r}
+
+q_1 <- model_predictions %>% 
+  select(1:2)
+
+colnames(q_1)[2] <- "question_1"
+
+ggplot(q_1, aes(x = model, y = question_1, fill = model)) + geom_bar(stat = "identity")
+
+
+```
+
+Just looking at my two participants' z scores for all 30 trials.
+
+```{r}
+
+data_analyzed %>% 
+  ggplot(aes(x = question, y = z_score, color = ResponseId)) + geom_point()
+
+```
+
+
+### Exploratory analyses
+
+Any follow-up analyses desired (not required).  
+
+## Discussion
+
+### Summary of Replication Attempt
+
+Open the discussion section with a paragraph summarizing the primary result from the confirmatory analysis and the assessment of whether it replicated, partially replicated, or failed to replicate the original result.  
+
+### Commentary
+
+Add open-ended commentary (if any) reflecting (a) insights from follow-up exploratory analysis, (b) assessment of the meaning of the replication (or not) - e.g., for a failure to replicate, are the differences between original and present study ones that definitely, plausibly, or are unlikely to have been moderators of the result, and (c) discussion of any objections or challenges raised by the current and original authors about the replication attempt.  None of these need to be long.
