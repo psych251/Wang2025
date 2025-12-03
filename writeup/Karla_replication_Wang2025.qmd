@@ -23,7 +23,7 @@ The stimuli for this project consisted of 30 still images depicting two characte
 
 ### Expected Challenges
 
-The biggest challenge will be interpreting the code and outputs for the models. I have never done modeling work first-hand, so I may grow confused and frustrated. The second biggest challenge may be hosting my study; I don't think that I will have to code a custom interface because the stimuli are just static images and participants will use scales to provide their responses (which are very common), but if I do have to code a custom interface, a challenge will be to ensure that I adequately collect all the right data needed for my analysis and correctly set the pipeline to download and store the data, e.g., make sure that refreshing the page does not overwrite the participant's data-frame. In any case, I have experience coding an interface from scratch (but am not super confident about it), so I know I can do it if it comes down to it. 
+The biggest challenge will be interpreting the code and outputs for the models. I have never done modeling work, so I may grow confused and frustrated. The second biggest challenge may be hosting my study; I don't think that I will have to code a custom interface because the stimuli are just static images and participants will use scales to provide their responses (which are very common), but if I do have to code a custom interface, a challenge will be to ensure that I adequately collect all the right data needed for my analysis and correctly set the pipeline to download and store the data, e.g., make sure that refreshing the page does not overwrite the participant's data-frame. In any case, I have experience coding an interface from scratch (but am not super confident about it), so I know I can do it if it comes down to it. 
 
 #### Links
 
@@ -44,7 +44,7 @@ Original effect size, power analysis for samples to achieve 80%, 90%, 95% power 
 
 Planned sample size and/or termination rule, sampling frame, known demographics if any, preselection rules if any.
 
-50 U.S. participants
+The authors did not specify preselection rules in the paper. For this replication, I will recruit participants who are fluent in English. I plan to collect 50 participants, as in the original experiment. 
 
 ### Materials
 
@@ -54,11 +54,9 @@ I precisely re-created the stimuli that the authors used in their original study
 
 ### Procedure
 
-I attempted to precisely re-create the procedure that the authors implemented in their original study.
+I precisely re-created the procedure that the authors implemented in their original study.
 
 "Participants were first familiarized with the seating scenario setup through a cover story. Participants were told that they would see events where a protagonist, Purple, arrived in a meeting room. Another agent, Yellow, had already arrived and seated. Participants were then told that Purple’s seating choice would affect the probability that Yellow would initiate a conversation before the meeting started. Thus, Purple would choose a seat based both on how far they had to walk and on how they felt toward Yellow. After reading the cover story, participants were asked six simple comprehension check questions to ensure they understood the logic of the task (the cover story and 30 stimuli trials are available on the OSF page). Participants had to correctly answer each comprehension question, and pass a reCAPTCHA test to proceed to the test trials. Participants who failed one of the comprehension checks were asked to review the cover story and were given unlimited attempts to answer the comprehension check question. They could only proceed to the next question if they correctly answered the previous one, or they could choose to exit this study. In the test phase, participants were presented with all 30 trials in a randomized order. In each trial, participants viewed a static image of the meeting room with Yellow’s seat and Purple’s choice. Participants were asked to answer ”How does Purple feel about Yellow?” using a slider, with one end representing Strongly Dislikes (coded as −7) and the other end representing Strongly Likes (coded as 7). At the end of the 30 trials, participants were asked to explain what strategy they used in the task, and they were asked “How intuitive do you find the following statement”: (1) “The farther away you sit from someone, the less likely they are to talk to you.” (2) “Imagine you are in the same meeting room setting as shown in the study. If you are speaking with someone, the farther away they are sitting, the harder it is to maintain a conversation." Participants rated the strength of their intuitions using a Likert scale from 1 to 7."
-
-Currently, for Pilot A the reCAPTCHA function is not an option for me on Qualtrics.
 
 ### Analysis Plan
 
@@ -71,22 +69,21 @@ Then, participant z scores were compared to model predictions. Model predictions
 
 ### Differences from Original Study
 
-No expected differences other than size of the sample. The original study recruited 50 people on prolific, but I may need to recruit less depending on the funding I recieve.
+No expected differences other than not starting the scale at neutral. Instead, my scale starts on the left-most corner at -7.
 <!-- Explicitly describe known differences in sample, setting, procedure, and analysis plan from original study.  The goal, of course, is to minimize those differences, but differences will inevitably occur.  Also, note whether such differences are anticipated to make a difference based on claims in the original article or subsequent published research on the conditions for obtaining the effect. -->
 
-### Methods Addendum (Post Data Collection)
+<!-- ### Methods Addendum (Post Data Collection) -->
 
-You can comment this section out prior to final report with data collection.
+<!-- You can comment this section out prior to final report with data collection. -->
 
-#### Actual Sample
-Sample size, demographics, data exclusions based on rules spelled out in analysis plan
+<!-- #### Actual Sample -->
+<!-- Sample size, demographics, data exclusions based on rules spelled out in analysis plan -->
 
-#### Differences from pre-data collection methods plan
-  Any differences from what was described as the original plan, or “none”.
+<!-- #### Differences from pre-data collection methods plan -->
+<!--   Any differences from what was described as the original plan, or “none”. -->
 
 
-## Results
-
+<!-- ## Results -->
 
 ### Data preparation
 
@@ -100,17 +97,18 @@ library(tidyverse)
 library(readr)
 
 #### Import data
-raw_data <- read_csv("data.csv")
-model_predictions <- read_csv("model predictions.csv")
+my_participant_responses <- read_csv("data/pilot_b.csv")
+df_model <- read.csv("data/wangJaraettinger/model_predictions.csv")
+# model_predictions <- read_csv("data/wangJaraettinger/model_predictions.csv")
 
 #### Data exclusion / filtering
-data <- raw_data %>% 
+participant_responses_clean <- my_participant_responses %>% 
   filter(Finished == "TRUE") %>% 
-  select(ResponseId, 21:50) %>% #### Prepare data for analysis - create columns etc.
-  pivot_longer(!ResponseId, names_to = "question", values_to = "response") %>% 
-  mutate(question = as.factor(question), response = as.numeric(response))
+  select(ResponseId, 79:115) 
 
-
+my_participants <- participant_responses_clean %>% 
+  select(2:31) %>% 
+  mutate(across(.cols = everything(), .fns = as.numeric))
 ```
 
 ### Confirmatory analysis
@@ -118,45 +116,185 @@ data <- raw_data %>%
 The analyses as specified in the analysis plan.
 
 ```{r}
-# compute within participant z scores (z_score) and average z score across trials (avg_z_score)
-data_analyzed <- data %>% 
-  group_by(ResponseId) %>% 
-  mutate(subj_avg = mean(response), subj_sd = sd(response)) %>% 
-  ungroup() %>% 
-  mutate(z_score = ((response - subj_avg) / subj_sd)) %>% 
-  group_by(question) %>% 
-  mutate(avg_z_score = mean(z_score)) %>% 
-  ungroup()
 
+## prepare participant data: z-score within participant, then average
+    # apply() Z-score (scale) row-wise (axis=1) 
+    # t() transposes the result so that columns correspond to original trials
+my_participants_z_matrix <- t(apply(my_participants, 1, scale)) # z-scores: (x - mean) / sd
+
+# convert data frame
+df_participants_z <- as.data.frame(my_participants_z_matrix)
+# add back original col names
+colnames(df_participants_z) <- colnames(df_participants)
+
+# calculate the average z-score for each trial (column means)
+human_average_z_scores <- colMeans(df_participants_z)
+# convert to data frame
+df_human_z_mean <- data.frame(trial = names(human_average_z_scores),
+                              human_average_z = human_average_z_scores)
+# ====================================================================
+
+# Extract only the model prediction data (excluding the 'model' column)
+df_model_data <- df_model[,-1]
+
+# Apply Z-score (scale) row-wise (across the 30 trials for each model)
+df_model_z_matrix <- t(apply(df_model_data, 1, scale))
+
+# Convert to a data frame, set model names as row names, and trial names as columns
+df_model_z <- as.data.frame(df_model_z_matrix)
+colnames(df_model_z) <- colnames(df_model_data)
+rownames(df_model_z) <- df_model[,1] # Set row names to model names
+
+# Transpose the Z-scored model data so trials are rows and models are columns
+df_model_z_T <- as.data.frame(t(df_model_z))
+df_model_z_T$trial <- rownames(df_model_z_T) # Move trial names to a column
+rownames(df_model_z_T) <- NULL
+
+myversion <- df_model %>% 
+  pivot_longer(-model, names_to = "trial", values_to = "predictions") %>% 
+  pivot_wider(names_from = model, values_from = predictions) %>% 
+  select(-1, everything())
+
+# combine model predictions and participant data
+my_correlation_data_z <- merge(df_human_z_mean, myversion, by = "trial")
+
+# ====================================================================
+
+# calculate the Pearson Correlation (r)
+
+model_columns <- df_model[,1]
+
+my_correlation_results_z <- data.frame(Model = model_columns,
+                                    Pearson_Correlation_r = NA)
+
+# loop through each model to calculate correlation
+for (i in 1:length(model_columns)) {
+  model_name <- model_columns[i]
+  
+  # calculate the Pearson correlation between the human average Z-score and the current model Z-score
+  r_value <- cor(my_correlation_data_z$human_average_z,
+                 my_correlation_data_z[[model_name]],
+                 method = "pearson")
+  
+  # save results
+  my_correlation_results_z[i, "Pearson_Correlation_r"] <- r_value
+}
+
+# round numeric col
+my_correlation_results_z$Pearson_Correlation_r <- round(my_correlation_results_z$Pearson_Correlation_r, 2)
+print(my_correlation_results_z)
 
 ```
 
+
+```{r}
+#| include: false
+# Reproduction of Wang & Jara-Ettinger (2025)
+
+# original data-sets 
+df_participants <- read.csv("data/wangJaraettinger/participants.csv")
+df_model <- read.csv("data/wangJaraettinger/model_predictions.csv")
+
+
+## prepare participant data: z-score within participant, then average
+    # apply() Z-score (scale) row-wise (axis=1) 
+    # t() transposes the result so that columns correspond to original trials
+df_participants_z_matrix <- t(apply(df_participants, 1, scale)) # z-scores: (x - mean) / sd
+
+# convert data frame
+df_participants_z <- as.data.frame(df_participants_z_matrix)
+# add back original col names
+colnames(df_participants_z) <- colnames(df_participants)
+
+# calculate the average z-score for each trial (column means)
+human_average_z_scores <- colMeans(df_participants_z)
+# convert to data frame
+df_human_z_mean <- data.frame(trial = names(human_average_z_scores),
+                              human_average_z = human_average_z_scores)
+# ====================================================================
+
+# Extract only the model prediction data (excluding the 'model' column)
+df_model_data <- df_model[,-1]
+
+# Apply Z-score (scale) row-wise (across the 30 trials for each model)
+df_model_z_matrix <- t(apply(df_model_data, 1, scale))
+
+# Convert to a data frame, set model names as row names, and trial names as columns
+df_model_z <- as.data.frame(df_model_z_matrix)
+colnames(df_model_z) <- colnames(df_model_data)
+rownames(df_model_z) <- df_model[,1] # Set row names to model names
+
+# Transpose the Z-scored model data so trials are rows and models are columns
+df_model_z_T <- as.data.frame(t(df_model_z))
+df_model_z_T$trial <- rownames(df_model_z_T) # Move trial names to a column
+rownames(df_model_z_T) <- NULL
+
+myversion <- df_model %>% 
+  pivot_longer(-model, names_to = "trial", values_to = "predictions") %>% 
+  pivot_wider(names_from = model, values_from = predictions) %>% 
+  select(-1, everything())
+
+# combine model predictions and participant data
+df_correlation_data_z <- merge(df_human_z_mean, myversion, by = "trial")
+
+# ====================================================================
+
+# calculate the Pearson Correlation (r)
+
+model_columns <- df_model[,1]
+
+correlation_results_z <- data.frame(Model = model_columns,
+                                    Pearson_Correlation_r = NA)
+
+# loop through each model to calculate correlation
+for (i in 1:length(model_columns)) {
+  model_name <- model_columns[i]
+  
+  # calculate the Pearson correlation between the human average Z-score and the current model Z-score
+  r_value <- cor(df_correlation_data_z$human_average_z,
+                 df_correlation_data_z[[model_name]],
+                 method = "pearson")
+  
+  # save results
+  correlation_results_z[i, "Pearson_Correlation_r"] <- r_value
+}
+
+# round numeric col
+correlation_results_z$Pearson_Correlation_r <- round(correlation_results_z$Pearson_Correlation_r, 2)
+print(correlation_results_z)
+
+```
 
 *Side-by-side graph with original graph is ideal here*
 
-Graph of model predictions for some random trial. I cannot join the model z scores with my participant z scores because the authors did not provide a way to decode which column name represented which trial. I've emailed the lead researcher and am hoping to get a response soon. Once I can join the participant scores with model scores, I will display the average participant z score bar on the same graph as the model z scores for each trial (one graph per trial).
+My participant data: Model predictions for all 30 trials.
+```{r}
+
+my_correlation_data_z %>%
+  pivot_longer(-trial, names_to = "model", values_to = "correlation") %>% 
+  ggplot(aes(x = model, y = correlation, fill = model)) + 
+  geom_bar(stat = "identity") + 
+  facet_wrap(~trial, ncol = 5) +
+  theme_classic() +
+  theme(legend.position = "right", axis.text.x = element_blank(), 
+        axis.ticks.x = element_blank(), axis.title.x = element_blank())
+  
+```
+
+Original participant data: Model predictions for all 30 trials (Wang & Jara-Ettinger, 2025)
 
 ```{r}
 
-q_1 <- model_predictions %>% 
-  select(1:2)
-
-colnames(q_1)[2] <- "question_1"
-
-ggplot(q_1, aes(x = model, y = question_1, fill = model)) + geom_bar(stat = "identity")
-
-
-```
-
-Just looking at my two participants' z scores for all 30 trials.
-
-```{r}
-
-data_analyzed %>% 
-  ggplot(aes(x = question, y = z_score, color = ResponseId)) + geom_point()
+df_correlation_data_z %>% 
+  pivot_longer(-trial, names_to = "model", values_to = "correlation") %>% 
+  ggplot(aes(x = model, y = correlation, fill = model)) + 
+  geom_bar(stat = "identity") + 
+  facet_wrap(~trial, ncol = 5) +
+  theme_classic() +
+  theme(legend.position = "right", axis.text.x = element_blank(), 
+        axis.ticks.x = element_blank(), axis.title.x = element_blank())
 
 ```
-
 
 ### Exploratory analyses
 
