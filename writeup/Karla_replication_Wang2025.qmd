@@ -69,7 +69,8 @@ Then, participant z scores were compared to model predictions. Model predictions
 
 ### Differences from Original Study
 
-No expected differences other than not starting the scale at neutral. Instead, my scale starts on the left-most corner at -7.
+One major difference is that I did not start my -7 to 7 scale at neutral. Instead, my scale starts on the left-most corner at -7. In my version, participants can see which number they are selecting on the scale, but not in the original study. Finally, I think the original authors used a bootstrpping method to calculate the confidence intervals for the Pearson Correlations, but I did not, so there is a slight discrepancy in the lower bounds of the CIs.
+
 <!-- Explicitly describe known differences in sample, setting, procedure, and analysis plan from original study.  The goal, of course, is to minimize those differences, but differences will inevitably occur.  Also, note whether such differences are anticipated to make a difference based on claims in the original article or subsequent published research on the conditions for obtaining the effect. -->
 
 <!-- ### Methods Addendum (Post Data Collection) -->
@@ -101,6 +102,9 @@ my_participant_responses <- read_csv("data/pilot_b.csv")
 df_model <- read.csv("data/wangJaraettinger/model_predictions.csv")
 # model_predictions <- read_csv("data/wangJaraettinger/model_predictions.csv")
 
+df_participants <- read.csv("data/wangJaraettinger/participants.csv")
+df_model <- read.csv("data/wangJaraettinger/model_predictions.csv")
+
 #### Data exclusion / filtering
 participant_responses_clean <- my_participant_responses %>% 
   filter(Finished == "TRUE") %>% 
@@ -123,40 +127,25 @@ The analyses as specified in the analysis plan.
 my_participants_z_matrix <- t(apply(my_participants, 1, scale)) # z-scores: (x - mean) / sd
 
 # convert data frame
-df_participants_z <- as.data.frame(my_participants_z_matrix)
+my_participants_z <- as.data.frame(my_participants_z_matrix)
 # add back original col names
-colnames(df_participants_z) <- colnames(df_participants)
+colnames(my_participants_z) <- colnames(df_participants)
 
 # calculate the average z-score for each trial (column means)
-human_average_z_scores <- colMeans(df_participants_z)
+my_human_average_z_scores <- colMeans(my_participants_z)
 # convert to data frame
-df_human_z_mean <- data.frame(trial = names(human_average_z_scores),
-                              human_average_z = human_average_z_scores)
+my_human_z_mean <- data.frame(trial = names(my_human_average_z_scores),
+                              human_average_z = my_human_average_z_scores)
 # ====================================================================
 
-# Extract only the model prediction data (excluding the 'model' column)
-df_model_data <- df_model[,-1]
-
-# Apply Z-score (scale) row-wise (across the 30 trials for each model)
-df_model_z_matrix <- t(apply(df_model_data, 1, scale))
-
-# Convert to a data frame, set model names as row names, and trial names as columns
-df_model_z <- as.data.frame(df_model_z_matrix)
-colnames(df_model_z) <- colnames(df_model_data)
-rownames(df_model_z) <- df_model[,1] # Set row names to model names
-
-# Transpose the Z-scored model data so trials are rows and models are columns
-df_model_z_T <- as.data.frame(t(df_model_z))
-df_model_z_T$trial <- rownames(df_model_z_T) # Move trial names to a column
-rownames(df_model_z_T) <- NULL
-
-myversion <- df_model %>% 
+## prepare model_predictions to merge with participant data 
+model_scores <- df_model %>% 
   pivot_longer(-model, names_to = "trial", values_to = "predictions") %>% 
   pivot_wider(names_from = model, values_from = predictions) %>% 
   select(-1, everything())
 
 # combine model predictions and participant data
-my_correlation_data_z <- merge(df_human_z_mean, myversion, by = "trial")
+my_correlation_data_z <- merge(my_human_z_mean, model_scores, by = "trial")
 
 # ====================================================================
 
@@ -165,30 +154,40 @@ my_correlation_data_z <- merge(df_human_z_mean, myversion, by = "trial")
 model_columns <- df_model[,1]
 
 my_correlation_results_z <- data.frame(Model = model_columns,
-                                    Pearson_Correlation_r = NA)
+                                    Pearson_Correlation_r = NA, 
+                                    CI_Upper = NA,
+                                    CI_Lower = NA)
 
-# loop through each model to calculate correlation
+# loop through each model to calculate correlation and CI
+
 for (i in 1:length(model_columns)) {
   model_name <- model_columns[i]
   
-  # calculate the Pearson correlation between the human average Z-score and the current model Z-score
-  r_value <- cor(my_correlation_data_z$human_average_z,
-                 my_correlation_data_z[[model_name]],
-                 method = "pearson")
+  cor_test_result <- cor.test(
+    my_correlation_data_z$human_average_z,
+    my_correlation_data_z[[model_name]],
+    method = "pearson",
+    conf.level = 0.95)
   
-  # save results
-  my_correlation_results_z[i, "Pearson_Correlation_r"] <- r_value
+  my_correlation_results_z[i, "Pearson_Correlation_r"] <- cor_test_result$estimate
+  my_correlation_results_z[i, "CI_Lower"] <- cor_test_result$conf.int[1]
+  my_correlation_results_z[i, "CI_Upper"] <- cor_test_result$conf.int[2]
 }
 
-# round numeric col
-my_correlation_results_z$Pearson_Correlation_r <- round(my_correlation_results_z$Pearson_Correlation_r, 2)
+# round numeric cols (including the new CI columns)
+my_correlation_results_z <- my_correlation_results_z %>%
+  mutate(across(where(is.numeric), ~ round(., 4)))
+
 print(my_correlation_results_z)
 
 ```
 
+My participant data (from Pilot B) & model from Wang & Jara-Ettinger (2025) correlations shown above
 
+Reproduction of Wang & Jara-Ettinger (2025), original human-model correlations shown below 
 ```{r}
-#| include: false
+#| echo: false
+
 # Reproduction of Wang & Jara-Ettinger (2025)
 
 # original data-sets 
@@ -213,22 +212,6 @@ df_human_z_mean <- data.frame(trial = names(human_average_z_scores),
                               human_average_z = human_average_z_scores)
 # ====================================================================
 
-# Extract only the model prediction data (excluding the 'model' column)
-df_model_data <- df_model[,-1]
-
-# Apply Z-score (scale) row-wise (across the 30 trials for each model)
-df_model_z_matrix <- t(apply(df_model_data, 1, scale))
-
-# Convert to a data frame, set model names as row names, and trial names as columns
-df_model_z <- as.data.frame(df_model_z_matrix)
-colnames(df_model_z) <- colnames(df_model_data)
-rownames(df_model_z) <- df_model[,1] # Set row names to model names
-
-# Transpose the Z-scored model data so trials are rows and models are columns
-df_model_z_T <- as.data.frame(t(df_model_z))
-df_model_z_T$trial <- rownames(df_model_z_T) # Move trial names to a column
-rownames(df_model_z_T) <- NULL
-
 myversion <- df_model %>% 
   pivot_longer(-model, names_to = "trial", values_to = "predictions") %>% 
   pivot_wider(names_from = model, values_from = predictions) %>% 
@@ -244,23 +227,28 @@ df_correlation_data_z <- merge(df_human_z_mean, myversion, by = "trial")
 model_columns <- df_model[,1]
 
 correlation_results_z <- data.frame(Model = model_columns,
-                                    Pearson_Correlation_r = NA)
+                                    Pearson_Correlation_r = NA, 
+                                    CI_Upper = NA,
+                                    CI_Lower = NA)
 
-# loop through each model to calculate correlation
 for (i in 1:length(model_columns)) {
   model_name <- model_columns[i]
   
-  # calculate the Pearson correlation between the human average Z-score and the current model Z-score
-  r_value <- cor(df_correlation_data_z$human_average_z,
-                 df_correlation_data_z[[model_name]],
-                 method = "pearson")
+  cor_test_result <- cor.test(
+    df_correlation_data_z$human_average_z,
+    df_correlation_data_z[[model_name]],
+    method = "pearson",
+    conf.level = 0.95)
   
-  # save results
-  correlation_results_z[i, "Pearson_Correlation_r"] <- r_value
+  correlation_results_z[i, "Pearson_Correlation_r"] <- cor_test_result$estimate
+  correlation_results_z[i, "CI_Lower"] <- cor_test_result$conf.int[1]
+  correlation_results_z[i, "CI_Upper"] <- cor_test_result$conf.int[2]
 }
 
-# round numeric col
-correlation_results_z$Pearson_Correlation_r <- round(correlation_results_z$Pearson_Correlation_r, 2)
+# round numeric cols (including the new CI columns)
+correlation_results_z <- correlation_results_z %>%
+  mutate(across(where(is.numeric), ~ round(., 4)))
+
 print(correlation_results_z)
 
 ```
@@ -309,3 +297,4 @@ Open the discussion section with a paragraph summarizing the primary result from
 ### Commentary
 
 Add open-ended commentary (if any) reflecting (a) insights from follow-up exploratory analysis, (b) assessment of the meaning of the replication (or not) - e.g., for a failure to replicate, are the differences between original and present study ones that definitely, plausibly, or are unlikely to have been moderators of the result, and (c) discussion of any objections or challenges raised by the current and original authors about the replication attempt.  None of these need to be long.
+
