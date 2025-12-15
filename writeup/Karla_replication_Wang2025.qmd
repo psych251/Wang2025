@@ -9,13 +9,11 @@ format:
     toc_depth: 3
 ---
 
-<!-- Replication reports should all use this template to standardize reporting across projects.  These reports will be public supplementary materials that accompany the summary report(s) of the aggregate results. -->
-
 ## Introduction
 
 ### Justification
 
-I want to replicate this study because I am interested in how humans make sophisticated social relationship inferences--for instance, how one person feels about another based off of perceptual cues (i.e., seating arrangements)--from very little data. This project is ideal because it elucidates how high-level cognition (e.g., theory of mind, naive utility calculus) mediates low-level perceptual cues that give rise to social inferences. Previously, I worked on a related project that sought to determine whether children can use gaze direction and duration to infer the nature of a relationship between dyads, and I hope to continue developing my knowledge about this line of work. Finally, the authors compared the human data they collected to three computational models; one of my goals this year is to learn more about computational modeling, so this project is an ideal first step.
+Hello, I'm interested in how humans make rich social inferences from minimal perceptual cues. In this vein, Wang & Jara-Ettinger (2025) explored the view that high-level cognition (e.g., theory of mind, naive utility calculus) mediates the low-level cues that give rise to rich social inferences. Specifically, they investigated how different seating arrangements affect the inferences people draw about relationships. Previously, I worked on a related project that investigated whether children can use agents' gaze direction and duration to infer the nature of their relationship, so I hope to continue developing my knowledge about this line of work. Finally, the authors compared their human data to three computational models; one of my goals this year is to learn more about computational modeling, so this project is an ideal first step.
 
 ### Stimuli & Procedures
 
@@ -23,7 +21,7 @@ The stimuli for this project consisted of 30 still images depicting two characte
 
 ### Expected Challenges
 
-The biggest challenge will be interpreting the code and outputs for the models. I have never done modeling work, so I may grow confused and frustrated. The second biggest challenge may be hosting my study; I don't think that I will have to code a custom interface because the stimuli are just static images and participants will use scales to provide their responses (which are very common), but if I do have to code a custom interface, a challenge will be to ensure that I adequately collect all the right data needed for my analysis and correctly set the pipeline to download and store the data, e.g., make sure that refreshing the page does not overwrite the participant's data-frame. In any case, I have experience coding an interface from scratch (but am not super confident about it), so I know I can do it if it comes down to it. 
+I expect to struggle in interpreting the model outputs and figuring out how to draw the comparisons between the model data and the human data.
 
 #### Links
 
@@ -38,53 +36,40 @@ The biggest challenge will be interpreting the code and outputs for the models. 
 
 ### Power Analysis
 
-Original effect size, power analysis for samples to achieve 80%, 90%, 95% power to detect that effect size.  Considerations of feasibility for selecting planned sample size.
+<!-- Original effect size, power analysis for samples to achieve 80%, 90%, 95% power to detect that effect size.  Considerations of feasibility for selecting planned sample size. -->
 
 ### Planned Sample
 
-Planned sample size and/or termination rule, sampling frame, known demographics if any, preselection rules if any.
-
-The authors did not specify preselection rules in the paper. For this replication, I will recruit participants who are fluent in English. I plan to collect 50 participants, as in the original experiment. 
+I plan to collect 50 participants, as in the original experiment. The authors did not specify pre-selection rules in the paper; for this replication, I will recruit participants who are fluent in English. 
 
 ### Materials
 
-I precisely re-created the stimuli that the authors used in their original study.
+I precisely re-created the stimuli that the authors used in their original study:
 
 "The stimuli consisted of 30 static images of an illustration of a meeting room with a desk, a set of chairs around the table, an entrance, and two agents, a yellow one and a purple one (see Fig. 2 for examples). Yellow was always seated in one of the chairs. Purple appeared seated in one of the chairs, along with a trajectory that indicated how they reached that seat from the entrance. Each image depicted a scenario where Purple entered a meeting room and decided where to sit while Yellow was already seated. To create a rich space of trials, we used a combinatorial design. We started by selecting three initial regions where Yellow could be sitting: (1) near the entrance, (2) far from the entrance, and (3) in the middle of the room. We then selected five different seating choices for Purple to sit in: (1) closest to the entrance, (2) closest to Yellow, (3) farthest from Yellow, and (4-5) two possible intermediate distances from Yellow. For each of the three initial regions where Yellow could be seated, we selected two possible seats in this region (e.g., one along the vertical row and one along the horizontal row). This results in a total of 30 (3x5x2) possible theoretical configurations. Additionally, the stimuli were designed to ensure that there are clusters of trials (two sets with 4 trials, and two with 6 trials) that controlled for the distance between the two agents so that we could better evaluate alternative heuristics."
 
 ### Procedure
 
-I precisely re-created the procedure that the authors implemented in their original study.
+I precisely re-created the procedure that the authors implemented in their original study:
 
 "Participants were first familiarized with the seating scenario setup through a cover story. Participants were told that they would see events where a protagonist, Purple, arrived in a meeting room. Another agent, Yellow, had already arrived and seated. Participants were then told that Purple’s seating choice would affect the probability that Yellow would initiate a conversation before the meeting started. Thus, Purple would choose a seat based both on how far they had to walk and on how they felt toward Yellow. After reading the cover story, participants were asked six simple comprehension check questions to ensure they understood the logic of the task (the cover story and 30 stimuli trials are available on the OSF page). Participants had to correctly answer each comprehension question, and pass a reCAPTCHA test to proceed to the test trials. Participants who failed one of the comprehension checks were asked to review the cover story and were given unlimited attempts to answer the comprehension check question. They could only proceed to the next question if they correctly answered the previous one, or they could choose to exit this study. In the test phase, participants were presented with all 30 trials in a randomized order. In each trial, participants viewed a static image of the meeting room with Yellow’s seat and Purple’s choice. Participants were asked to answer ”How does Purple feel about Yellow?” using a slider, with one end representing Strongly Dislikes (coded as −7) and the other end representing Strongly Likes (coded as 7). At the end of the 30 trials, participants were asked to explain what strategy they used in the task, and they were asked “How intuitive do you find the following statement”: (1) “The farther away you sit from someone, the less likely they are to talk to you.” (2) “Imagine you are in the same meeting room setting as shown in the study. If you are speaking with someone, the farther away they are sitting, the harder it is to maintain a conversation." Participants rated the strength of their intuitions using a Likert scale from 1 to 7."
 
 ### Analysis Plan
 
-Participant judgments were z-scored within participants and averaged across trial type.
-Then, participant z scores were compared to model predictions. Model predictions were also z scored. The participant and model z scores were compared by computing the Pearson correlation coefficient and a 95% CI for each comparison.
-
-<!-- Can also quote directly, though it is less often spelled out effectively for an analysis strategy section.  The key is to report an analysis strategy that is as close to the original - data cleaning rules, data exclusion rules, covariates, etc. - as possible.   -->
+Participant judgments were z-scored within participants and averaged across trial type. Then, participant z scores were compared to model predictions. Model predictions were also z scored. The participant and model z scores were compared by computing the Pearson correlation coefficient and a 95% CI for each comparison.
 
 <!-- **Clarify key analysis of interest here**  You can also pre-specify additional analyses you plan to do. -->
 
 ### Differences from Original Study
 
-One major difference is that I did not start my -7 to 7 scale at neutral. Instead, my scale starts on the left-most corner at -7. In my version, participants can see which number they are selecting on the scale, but not in the original study. Finally, I think the original authors used a bootstrpping method to calculate the confidence intervals for the Pearson Correlations, but I did not, so there is a slight discrepancy in the lower bounds of the CIs.
+One major difference is that I did not start my -7 to 7 scale at neutral. Instead, my scale starts on the left-most corner at -7. Another difference is that participants can see which number they are selecting on the scale, but not in the original study. I do not expect these differences to impact the results.
 
-<!-- Explicitly describe known differences in sample, setting, procedure, and analysis plan from original study.  The goal, of course, is to minimize those differences, but differences will inevitably occur.  Also, note whether such differences are anticipated to make a difference based on claims in the original article or subsequent published research on the conditions for obtaining the effect. -->
+### Methods Addendum (Post Data Collection)
 
-<!-- ### Methods Addendum (Post Data Collection) -->
+#### Actual Sample
+The final sample size for this study was 50 English-speaking participants. (No differences from original sampling plan.)
 
-<!-- You can comment this section out prior to final report with data collection. -->
-
-<!-- #### Actual Sample -->
-<!-- Sample size, demographics, data exclusions based on rules spelled out in analysis plan -->
-
-<!-- #### Differences from pre-data collection methods plan -->
-<!--   Any differences from what was described as the original plan, or “none”. -->
-
-
-<!-- ## Results -->
+## Results
 
 ### Data preparation
 
@@ -95,206 +80,326 @@ Data preparation following the analysis plan.
 
 #### Load Relevant Libraries and Functions
 library(tidyverse)
+library(forcats)
+library(stats)
+library(boot)
 library(readr)
+library(here)
 
 #### Import data
-my_participant_responses <- read_csv("data/pilot_b.csv")
-df_model <- read.csv("data/wangJaraettinger/model_predictions.csv")
-# model_predictions <- read_csv("data/wangJaraettinger/model_predictions.csv")
 
-df_participants <- read.csv("data/wangJaraettinger/participants.csv")
-df_model <- read.csv("data/wangJaraettinger/model_predictions.csv")
+# data from my replication attempt ---------------------------------------------
 
-#### Data exclusion / filtering
-participant_responses_clean <- my_participant_responses %>% 
-  filter(Finished == "TRUE") %>% 
-  select(ResponseId, 79:115) 
+# n = 2
+pilot_b <- read_csv(here("data", "pilot_b.csv")) %>% 
+  filter(Finished == "TRUE")
 
-my_participants <- participant_responses_clean %>% 
-  select(2:31) %>% 
+# n = 48
+replication_sample <- read_csv(here("data", "replication_sample.csv")) %>% 
+  filter(Finished == "TRUE")
+
+# complete replication sample, n = 50
+my_participant_responses <- rbind(pilot_b, replication_sample) %>% 
+  select(79:108) %>% 
   mutate(across(.cols = everything(), .fns = as.numeric))
+
+# save new data frame to directory 
+# write_csv(my_participant_responses, here("data", "my_participant_responses.csv"))
+
+# data from original study -----------------------------------------------------
+
+original_model <- read.csv(here("data", "wangJaraettinger", 
+                                "model_predictions.csv"), check.names = FALSE)
+original_participants <- read.csv(here("data", "wangJaraettinger", 
+                                       "participants.csv"), check.names = FALSE)
+
+```
+
+```{r}
+
+### clean data
+
+# helper function: calculate and reshape means 
+calculate_and_reshape_means <- function(df, target_cols, new_col_name) {
+  df %>%
+    select(all_of(target_cols)) %>%
+    # check for cols starting with "X" and remove character
+    select(-any_of(c("X"))) %>% 
+    summarise(across(everything(), mean)) %>%
+    tidyr::pivot_longer(everything(), names_to = "Trial", values_to = new_col_name)
+}
+
+# helper function: remove the '_Q' part of a col, e.g., '(2,7)_D_Q_1' -> '(2,7)_D_1'
+clean_name <- function(col_name) {
+  return(gsub("_Q_", "_", col_name))
+}
+
+# column names (the 30 trials) from original human data
+target_cols <- colnames(original_participants)
+all_model_names <- unique(original_model$model)
+
+# original human mean responses (Reference)
+original_means_df <- calculate_and_reshape_means(original_participants, target_cols, "Original_Human_Mean")
+
+# Apply the cleaning function to all column names of the replication data
+colnames(my_participant_responses) <- sapply(colnames(my_participant_responses), clean_name)
+
+# Calculate the mean across all participants for each trial in the replication data
+replication_means_df <- calculate_and_reshape_means(my_participant_responses, target_cols, "Replication_Human_Mean")
+
+# Merge the two raw mean vectors by trial name
+df_comparison_raw <- merge(original_means_df, replication_means_df, by = "Trial")
+
 ```
 
 ### Confirmatory analysis
 
-The analyses as specified in the analysis plan.
+First, I compared the original human data with the data I collected for my replication. Recall that I did not set up my -7 to 7 scale in exactly the same way as in the original study. 
+```{r}
+
+# calculate similarity (Pearson Correlation) between my participant and original data
+correlation_test_human_human <- cor.test(df_comparison_raw$Original_Human_Mean, 
+                             df_comparison_raw$Replication_Human_Mean,
+                             method = "pearson")
+
+# extract results
+r_value_hh <- correlation_test_human_human$estimate
+p_value_hh <- correlation_test_human_human$p.value
+
+# create results table
+results_hh <- data.frame(
+  Metric = c("Pearson Correlation (r)", "P-value", "Degrees of Freedom"),
+  Value = c(round(r_value_hh, 4), format.pval(p_value_hh, digits = 5), correlation_test_human_human$parameter)
+)
+
+print(results_hh)
+
+```
 
 ```{r}
 
-## prepare participant data: z-score within participant, then average
-    # apply() Z-score (scale) row-wise (axis=1) 
-    # t() transposes the result so that columns correspond to original trials
-my_participants_z_matrix <- t(apply(my_participants, 1, scale)) # z-scores: (x - mean) / sd
+plot_title_hh <- paste0("Response Similarity: Original vs. Replication (r = ", round(r_value_hh, 3), ")")
 
-# convert data frame
-my_participants_z <- as.data.frame(my_participants_z_matrix)
-# add back original col names
-colnames(my_participants_z) <- colnames(df_participants)
+min_val <- min(df_comparison_raw$Original_Human_Mean, df_comparison_raw$Replication_Human_Mean)
+max_val <- max(df_comparison_raw$Original_Human_Mean, df_comparison_raw$Replication_Human_Mean)
+limits <- c(min_val - 0.5, max_val + 0.5)
 
-# calculate the average z-score for each trial (column means)
-my_human_average_z_scores <- colMeans(my_participants_z)
-# convert to data frame
-my_human_z_mean <- data.frame(trial = names(my_human_average_z_scores),
-                              human_average_z = my_human_average_z_scores)
-# ====================================================================
+ggplot(df_comparison_raw, aes(Original_Human_Mean, Replication_Human_Mean)) +
+  # 1. Scatter points for each trial
+  geom_point(color = "#1f78b4", size = 3, alpha = 0.7) +
+  geom_abline(intercept = 0, slope = 1, linetype = "dashed", color = "gray50") +
+  geom_smooth(method = "lm", se = FALSE, color = "#e31a1c") +
+  labs(title = plot_title_hh,
+    x = "Original Human responses (mean)",
+    y = "Replication Human responses (mean)") +
+  coord_fixed(xlim = limits, ylim = limits) +
+  theme_minimal(base_size = 14) +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold"),
+    panel.grid.minor = element_blank()
+  )
 
-## prepare model_predictions to merge with participant data 
-model_scores <- df_model %>% 
-  pivot_longer(-model, names_to = "trial", values_to = "predictions") %>% 
-  pivot_wider(names_from = model, values_from = predictions) %>% 
-  select(-1, everything())
+```
 
-# combine model predictions and participant data
-my_correlation_data_z <- merge(my_human_z_mean, model_scores, by = "trial")
+Then, I z-scored my participant data and generated confidence intervals. 
+```{r}
 
-# ====================================================================
+# number of bootstrap replicates
+N_BOOTSTRAP_REPS <- 5000
 
-# calculate the Pearson Correlation (r)
+# Z-score the human mean columns
+df_comparison_z <- df_comparison_raw %>%
+  mutate(
+    Original_Human_Z = scale(Original_Human_Mean)[,1],
+    Replication_Human_Z = scale(Replication_Human_Mean)[,1])
 
-model_columns <- df_model[,1]
-
-my_correlation_results_z <- data.frame(Model = model_columns,
-                                    Pearson_Correlation_r = NA, 
-                                    CI_Upper = NA,
-                                    CI_Lower = NA)
-
-# loop through each model to calculate correlation and CI
-
-for (i in 1:length(model_columns)) {
-  model_name <- model_columns[i]
-  
-  cor_test_result <- cor.test(
-    my_correlation_data_z$human_average_z,
-    my_correlation_data_z[[model_name]],
-    method = "pearson",
-    conf.level = 0.95)
-  
-  my_correlation_results_z[i, "Pearson_Correlation_r"] <- cor_test_result$estimate
-  my_correlation_results_z[i, "CI_Lower"] <- cor_test_result$conf.int[1]
-  my_correlation_results_z[i, "CI_Upper"] <- cor_test_result$conf.int[2]
+# bootstrap for correlations
+  # d: merged Z-score dataframe
+  # i: resampled row indices
+cor_boot_function <- function(d, i, human_z_col, model_z_col) {
+  return(cor(d[i, human_z_col], d[i, model_z_col], method = "pearson"))
 }
 
-# round numeric cols (including the new CI columns)
-my_correlation_results_z <- my_correlation_results_z %>%
-  mutate(across(where(is.numeric), ~ round(., 4)))
-
-print(my_correlation_results_z)
-
-```
-
-My participant data (from Pilot B) & model from Wang & Jara-Ettinger (2025) correlations shown above
-
-Reproduction of Wang & Jara-Ettinger (2025), original human-model correlations shown below 
-```{r}
-#| echo: false
-
-# Reproduction of Wang & Jara-Ettinger (2025)
-
-# original data-sets 
-df_participants <- read.csv("data/wangJaraettinger/participants.csv")
-df_model <- read.csv("data/wangJaraettinger/model_predictions.csv")
-
-
-## prepare participant data: z-score within participant, then average
-    # apply() Z-score (scale) row-wise (axis=1) 
-    # t() transposes the result so that columns correspond to original trials
-df_participants_z_matrix <- t(apply(df_participants, 1, scale)) # z-scores: (x - mean) / sd
-
-# convert data frame
-df_participants_z <- as.data.frame(df_participants_z_matrix)
-# add back original col names
-colnames(df_participants_z) <- colnames(df_participants)
-
-# calculate the average z-score for each trial (column means)
-human_average_z_scores <- colMeans(df_participants_z)
-# convert to data frame
-df_human_z_mean <- data.frame(trial = names(human_average_z_scores),
-                              human_average_z = human_average_z_scores)
-# ====================================================================
-
-myversion <- df_model %>% 
-  pivot_longer(-model, names_to = "trial", values_to = "predictions") %>% 
-  pivot_wider(names_from = model, values_from = predictions) %>% 
-  select(-1, everything())
-
-# combine model predictions and participant data
-df_correlation_data_z <- merge(df_human_z_mean, myversion, by = "trial")
-
-# ====================================================================
-
-# calculate the Pearson Correlation (r)
-
-model_columns <- df_model[,1]
-
-correlation_results_z <- data.frame(Model = model_columns,
-                                    Pearson_Correlation_r = NA, 
-                                    CI_Upper = NA,
-                                    CI_Lower = NA)
-
-for (i in 1:length(model_columns)) {
-  model_name <- model_columns[i]
+# calculate Pearson r using Z-Scores and CIs
+calculate_similarity_z <- function(human_means_df_z, model_predictions, model_name, human_col_name) {
   
-  cor_test_result <- cor.test(
-    df_correlation_data_z$human_average_z,
-    df_correlation_data_z[[model_name]],
-    method = "pearson",
-    conf.level = 0.95)
+  # isolate and reshape the predictions for the specific model
+  target_cols_model <- target_cols[target_cols %in% colnames(model_predictions)]
   
-  correlation_results_z[i, "Pearson_Correlation_r"] <- cor_test_result$estimate
-  correlation_results_z[i, "CI_Lower"] <- cor_test_result$conf.int[1]
-  correlation_results_z[i, "CI_Upper"] <- cor_test_result$conf.int[2]
+  model_data_long <- model_predictions %>%
+    select(model, all_of(target_cols_model)) %>%
+    filter(model == model_name) %>%
+    pivot_longer(
+      cols = -model, 
+      names_to = "Trial",
+      values_to = "Model_Prediction")
+  # model predictions are already z-scored 
+    # (downloaded from OSF, Wang & Jara-Ettinger (2025))
+  model_data_long <- model_data_long %>%
+    rename(Model_Prediction_Z = Model_Prediction)
+  # join human Z-scores and model Z-scores by trial name
+  original_model_comparison_z <- merge(human_means_df_z, model_data_long, by = "Trial")
+  # get column indices to use in the boot function
+  human_col_index <- which(colnames(original_model_comparison_z) == human_col_name)
+  model_col_index <- which(colnames(original_model_comparison_z) == "Model_Prediction_Z")
+  # calculate Pearson correlation
+  correlation_test <- cor.test(original_model_comparison_z[[human_col_name]], 
+                               original_model_comparison_z$Model_Prediction_Z,
+                               method = "pearson")
+  
+  # bootstrapping to get the Confidence Intervals
+  
+  # wrapper function: pass specific column names to the cor_boot_function
+  boot_wrapper <- function(d, i) {
+      cor_boot_function(d, i, human_z_col = human_col_index, model_z_col = model_col_index)
+  }
+  
+  # suppress warnings from boot() due to small sample size
+  boot_results <- suppressWarnings(boot(
+    data = original_model_comparison_z, 
+    statistic = boot_wrapper, 
+    R = N_BOOTSTRAP_REPS))
+  
+  # CI calculation with fallback
+  ci_method <- "BCa"
+  ci_lower <- NA
+  ci_upper <- NA
+  
+  # BCa
+  ci_bca <- suppressWarnings(boot.ci(boot_results, type = "bca"))
+  
+  if (!is.null(ci_bca) && !is.na(ci_bca$bca[4])) {
+    ci_lower <- round(ci_bca$bca[4], 4)
+    ci_upper <- round(ci_bca$bca[5], 4)
+    
+  } else { # BCa failed, fall back to percentile method
+    ci_method <- "Percentile (Fallback)"
+    ci_perc <- suppressWarnings(boot.ci(boot_results, type = "perc"))
+    
+    if (!is.null(ci_perc) && !is.na(ci_perc$percent[4])) {
+      ci_lower <- round(ci_perc$percent[4], 4)
+      ci_upper <- round(ci_perc$percent[5], 4)
+    } else { # both failed, boooo!
+      ci_method <- "Failed"
+    }
+  }
+
+  # return key results
+  return(data.frame(
+    Model = model_name,
+    Comparison = paste0(sub("_Z", "", human_col_name), "_Z"),
+    Pearson_r = round(correlation_test$estimate, 4),
+    CI_Method = ci_method,
+    CI_95_Lower = ci_lower,
+    CI_95_Upper = ci_upper,
+    P_value = format.pval(correlation_test$p.value, digits = 5),
+    N_Trials = correlation_test$parameter + 2 
+  ))
 }
 
-# round numeric cols (including the new CI columns)
-correlation_results_z <- correlation_results_z %>%
-  mutate(across(where(is.numeric), ~ round(., 4)))
+# REPRODUCTION: models vs. original human Data (z-scored)
+results_models_vs_original_z <- do.call(rbind, lapply(all_model_names, function(m) {
+  calculate_similarity_z(df_comparison_z, original_model, m, "Original_Human_Z")
+}))
 
-print(correlation_results_z)
+# MAIN ANALYSIS: models vs. replication human Data (z-scored)
+results_models_vs_replication_z <- do.call(rbind, lapply(all_model_names, function(m) {
+  calculate_similarity_z(df_comparison_z, original_model, m, "Replication_Human_Z")
+}))
 
+# combine all z-scored model results into one table
+all_model_results_z <- bind_rows(results_models_vs_original_z, results_models_vs_replication_z)
 ```
 
-*Side-by-side graph with original graph is ideal here*
-
-My participant data: Model predictions for all 30 trials.
-```{r}
-
-my_correlation_data_z %>%
-  pivot_longer(-trial, names_to = "model", values_to = "correlation") %>% 
-  ggplot(aes(x = model, y = correlation, fill = model)) + 
-  geom_bar(stat = "identity") + 
-  facet_wrap(~trial, ncol = 5) +
-  theme_classic() +
-  theme(legend.position = "right", axis.text.x = element_blank(), 
-        axis.ticks.x = element_blank(), axis.title.x = element_blank())
-  
-```
-
-Original participant data: Model predictions for all 30 trials (Wang & Jara-Ettinger, 2025)
+#### Visualize the comparisons
 
 ```{r}
+#| message: false
+#| warning: false
 
-df_correlation_data_z %>% 
-  pivot_longer(-trial, names_to = "model", values_to = "correlation") %>% 
-  ggplot(aes(x = model, y = correlation, fill = model)) + 
-  geom_bar(stat = "identity") + 
-  facet_wrap(~trial, ncol = 5) +
-  theme_classic() +
-  theme(legend.position = "right", axis.text.x = element_blank(), 
-        axis.ticks.x = element_blank(), axis.title.x = element_blank())
+### Visualization
+
+# models not part of main analysis
+remove_models <- c("ablated_model", "distance_model")
+
+results_small <- all_model_results_z %>% 
+  filter(!Model %in% remove_models)
+
+forest_plot_models <- ggplot(results_small, 
+                             aes(x = Pearson_r, 
+                                 y = Model, 
+                                 color = Comparison)) +
+  # error bars for the 95% CIs
+  geom_errorbarh(aes(xmin = CI_95_Lower, xmax = CI_95_Upper), 
+                 height = 0.2, linewidth = 1, alpha = 0.7) +
+  geom_point(size = 3.5) +
+  # null hypothesis line
+  geom_vline(xintercept = 0, linetype = "dashed", color = "gray50") +
+  labs(
+    title = "Model-Human Response Correlations (Z-Scored)",
+    subtitle = paste0("Pearson's r with 95% CIs (BCa, N = ", N_BOOTSTRAP_REPS, " bootstraps)"),
+    x = "Pearson Correlation Coefficient (r)",
+    y = NULL) +
+  scale_color_manual(values = c("Original_Human_Z" = "#ff8624", # orange
+                                "Replication_Human_Z" = "#99d5fb"), # blue
+                     labels = c("Original_Human_Z" = "Original Human Responses", 
+                                "Replication_Human_Z" = "Replication Human Responses")) +
+  # xlim(-0.1, 1) + 
+  theme_minimal(base_size = 14) +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold"),
+    plot.subtitle = element_text(hjust = 0.5),
+    panel.grid.minor = element_blank(),
+    legend.position = "bottom"
+  )
+
+forest_plot_models
 
 ```
-
-### Exploratory analyses
-
-Any follow-up analyses desired (not required).  
 
 ## Discussion
 
 ### Summary of Replication Attempt
 
-Open the discussion section with a paragraph summarizing the primary result from the confirmatory analysis and the assessment of whether it replicated, partially replicated, or failed to replicate the original result.  
+<!-- Open the discussion section with a paragraph summarizing the primary result from the confirmatory analysis and the assessment of whether it replicated, partially replicated, or failed to replicate the original result.   -->
+
+```{r}
+#| include: false
+
+results_small_rounded <- results_small %>%
+  mutate(CI_95_Lower = as.numeric(CI_95_Lower), CI_95_Upper = as.numeric(CI_95_Upper),
+         Pearson_r = as.numeric(Pearson_r), P_value = as.numeric(P_value)) %>% 
+  mutate(Pearson_r = round(Pearson_r, 2),
+    CI_95_Lower = round(CI_95_Lower, 2),
+    CI_95_Upper = round(CI_95_Upper, 2),
+    P_value_formatted = ifelse(
+      P_value < 0.001,
+      " <.001",
+      as.character(round(P_value, 3))))
+
+```
+
+
+I successfully replicated the main results from Wang & Jara-Ettinger (2025) such that, as in the original study, the three main models successfully correlated with my participant responses: combined model (r = `r results_small_rounded$Pearson_r[4]`; 95% CI: `r results_small_rounded$CI_95_Lower[4]`-`r results_small_rounded$CI_95_Upper[4]`), probability model (r = `r results_small_rounded$Pearson_r[5]`; 95% CI: `r results_small_rounded$CI_95_Lower[5]`-`r results_small_rounded$CI_95_Upper[5]`), 
+cost model (r = `r results_small_rounded$Pearson_r[6]`; 95% CI: `r results_small_rounded$CI_95_Lower[6]`-`r results_small_rounded$CI_95_Upper[6]`). However, as we can see from the graph above, my results were slightly but systematically weaker than the results from the original study; my r values were slightly lower and my confidence intervals were slightly wider than in the original study. This may be due to the difference in the way the slider for the main trials was presented to the participants. Because the r values and confidence intervals systemically vary in the same direction as the values in the original study, are close in value, and are all p < 0.001, I conclude that this was a successful replication.
+
+<!-- Combined: -->
+<!-- OrigHuman `r results_small$Pearson_r[1]`, `r results_small$CI_95_Lower[1]`, `r results_small$CI_95_Upper[1]`, `r results_small$P_value[1]` -->
+<!-- RepHuman `r results_small$Pearson_r[4]`, `r results_small$CI_95_Lower[4]`, `r results_small$CI_95_Upper[4]`, `r results_small$P_value[4]` -->
+
+<!-- Probability: -->
+<!-- OrigHuman `r results_small$Pearson_r[2]`, `r results_small$CI_95_Lower[2]`, `r results_small$CI_95_Upper[2]`, `r results_small$P_value[2]` -->
+<!-- RepHuman `r results_small$Pearson_r[5]`, `r results_small$CI_95_Lower[5]`, `r results_small$CI_95_Upper[5]`, `r results_small$P_value[5]` -->
+
+<!-- Cost: -->
+<!-- OrigHuman `r results_small$Pearson_r[3]`, `r results_small$CI_95_Lower[3]`, `r results_small$CI_95_Upper[3]`, `r results_small$P_value[3]` -->
+<!-- RepHuman `r results_small$Pearson_r[6]`, `r results_small$CI_95_Lower[6]`, `r results_small$CI_95_Upper[6]`, `r results_small$P_value[6]` -->
 
 ### Commentary
 
-Add open-ended commentary (if any) reflecting (a) insights from follow-up exploratory analysis, (b) assessment of the meaning of the replication (or not) - e.g., for a failure to replicate, are the differences between original and present study ones that definitely, plausibly, or are unlikely to have been moderators of the result, and (c) discussion of any objections or challenges raised by the current and original authors about the replication attempt.  None of these need to be long.
+Throughout this project, I learned that it is very important to develop intuitively structured project directories. Specifically, I developed a better sense of how important it is to include meta-data in project directories, e.g., a key for column names that may not be universally interpretable otherwise. It was a pleasure to replicate Wang & Jara-Ettinger (2025) because their OSF project directory was extremely well organized and lead author Zihan Wang was extremely kind in providing feedback and answering my questions. (If you are reading this Zihan, thank you!!) 
+
+<!-- Add open-ended commentary (if any) reflecting (a) insights from follow-up exploratory analysis, (b) assessment of the meaning of the replication (or not) - e.g., for a failure to replicate, are the differences between original and present study ones that definitely, plausibly, or are unlikely to have been moderators of the result, and (c) discussion of any objections or challenges raised by the current and original authors about the replication attempt.  None of these need to be long. -->
+
+
 

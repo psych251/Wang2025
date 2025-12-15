@@ -1,0 +1,2 @@
+
+These are the main trials. Please IGNORE the title slides, e.g., "1.1 When Yellow sits..." Title slides were not shown to participants; they are only for the researcher to distinguish between the different kinds of seating arrangements.
