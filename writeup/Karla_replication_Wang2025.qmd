@@ -137,16 +137,15 @@ clean_name <- function(col_name) {
 target_cols <- colnames(original_participants)
 all_model_names <- unique(original_model$model)
 
-# original human mean responses (Reference)
+# original human mean responses 
 original_means_df <- calculate_and_reshape_means(original_participants, target_cols, "Original_Human_Mean")
 
-# Apply the cleaning function to all column names of the replication data
+# clean all col names for my_participant_responses
 colnames(my_participant_responses) <- sapply(colnames(my_participant_responses), clean_name)
 
-# Calculate the mean across all participants for each trial in the replication data
+# calculate the mean across all participants for each trial my_participant_responses
 replication_means_df <- calculate_and_reshape_means(my_participant_responses, target_cols, "Replication_Human_Mean")
 
-# Merge the two raw mean vectors by trial name
 df_comparison_raw <- merge(original_means_df, replication_means_df, by = "Trial")
 
 ```
